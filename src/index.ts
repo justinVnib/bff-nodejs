@@ -1,8 +1,10 @@
 import express, { Request, Response } from 'express';
 import axios from 'axios';
+import 'dotenv/config'
 
 const app = express();
-const PORT = 3009;
+const PORT = process.env.PORT || 3000;
+const CORE_API_URL = process.env.CORE_API_URL;
 
 app.use(express.json());
 
@@ -14,11 +16,11 @@ app.get('/api/user-summary/:id', async (req: Request, res: Response) => {
     console.log(`--- BFF đang xử lý yêu cầu cho User ID: ${userId} ---`);
 
     // Bước 1: Gọi sang Server Core (Giả lập /lcnet/user) để lấy thông tin user
-    const userResponse = await axios.get(`https://jsonplaceholder.typicode.com/users/${userId}`);
+    const userResponse = await axios.get(`${CORE_API_URL}/users/${userId}`);
     const userData = userResponse.data;
 
     // Bước 2: Gọi sang Server Core khác (Giả lập /lcnet/posts) để lấy danh sách bài viết
-    const postsResponse = await axios.get(`https://jsonplaceholder.typicode.com/posts?userId=${userId}`);
+    const postsResponse = await axios.get(`${CORE_API_URL}/posts?userId=${userId}`);
     const userPosts = postsResponse.data;
 
     // Bước 3: "XÀO NẤU" DỮ LIỆU (Đây là nhiệm vụ chính của BFF)
