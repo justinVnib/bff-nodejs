@@ -9,7 +9,11 @@
     // See also https://aka.ms/tsconfig/module
     "module": "ESNext",
     "target": "ESNext",
-    "moduleResolution": "Node",
+    "moduleResolution": "Bundler",
+    "esModuleInterop": true,
+    "outDir": "./dist",        // Nơi chứa file build
+    "rootDir": "./src",        // Nơi chứa file source
+    "noEmit": false, // Nếu bạn dùng tsx hoặc vite để chạy trực tiếp
     "types": [],
     // For nodejs:
     // "lib": ["esnext"],
