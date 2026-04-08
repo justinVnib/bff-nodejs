@@ -1,3 +1,3 @@
 # bff-nodejs
 
-test auto deploy 2
+test auto deploy 3
