@@ -1,5 +1,12 @@
+name: Kiểm tra Secret có tồn tại không
+        run: |
+          if [ -z "${{ secrets.HOST }}" ]; then
+            echo "LỖI: Không tìm thấy Secret HOST"
+            exit 1
+          else
+            echo "Đã tìm thấy Secret HOST"
+          fi
 name: Deploy to AWS EC2
-
 on:
   push:
     branches: [ main ]
