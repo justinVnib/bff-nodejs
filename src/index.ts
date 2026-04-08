@@ -1,12 +1,21 @@
 import express, { Request, Response } from 'express';
 import axios from 'axios';
 import 'dotenv/config'
+import rateLimit from 'express-rate-limit';
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 phút
+  max: 100, // Giới hạn mỗi IP chỉ được gọi 100 request
+  message: "Bạn gọi API quá nhanh, vui lòng thử lại sau!"
+});
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 const CORE_API_URL = process.env.CORE_API_URL;
 
 app.use(express.json());
+app.use(limiter);
+
 
 // Giả sử đây là API mà Front-end (Vue.js) của bạn sẽ gọi
 app.get('/api/user-summary/:id', async (req: Request, res: Response) => {
